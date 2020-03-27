@@ -14,6 +14,16 @@ svg:hover {
   cursor: crosshair;
 }
 
+
+.element:last-of-type {
+  stroke: #42A5F5;
+  stroke-width: 1px;
+}
+
+.element:hover {
+    cursor: pointer;
+}
+
 .button {
   border: none;
   padding: .4em 1em;

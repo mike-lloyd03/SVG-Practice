@@ -15,13 +15,8 @@ const start = function() {
 
 const s = Snap(w, h);
 
-// const v = s.circle(100, 100, 5);
-// v.drag(move, start);
-
-
-
-$('#vertTool').click(event => {
-  if (event.target.value) {
+$('#vertTool').click(buttonEvent => {
+  if (buttonEvent.target.value) {
     s.unclick()
     $('#vertTool').val('').removeClass('on')
   }
@@ -33,13 +28,23 @@ $('#vertTool').click(event => {
 
 $('#clear').click(() => {s.selectAll('.element').remove()})
 
-$('#lineTool').click(event => {
-  if (event.target.value) {
+$('#lineTool').click(buttonEvent => {
+  if (buttonEvent.target.value) {
     s.unclick()
     $('#lineTool').val('').removeClass('on')
   }
   else {
-    s.click(event => s.line(event.offsetX, event.offsetY, event.offsetX + 50, event.offsetY + 50).addClass('element'))
+    s.click(event => {
+      if (!$('.newLine:last-of-type')[0]) {
+        s.line(event.offsetX, event.offsetY, event.offsetX, event.offsetY)
+        .attr({stroke: 'black', strokeWidth: '1'})
+        .addClass('element newLine')
+      }
+      else {
+        s.select('.element:last-of-type').attr({x2: event.offsetX, y2: event.offsetY})
+        $('.newLine:last-of-type').removeClass('newLine')
+      }
+    })
     $('#lineTool').val('on').addClass('on')
   }
 })
