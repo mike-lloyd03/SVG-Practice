@@ -1,0 +1,33 @@
+body {
+  background: #1565C0;
+}
+
+#container {
+  margin: auto;
+}
+
+svg {
+  background: white;
+}
+
+svg:hover {
+  cursor: crosshair;
+}
+
+.button {
+  border: none;
+  padding: .4em 1em;
+  margin: 1em;
+  background: #ECEFF1;
+  border: 1px solid white;
+}
+
+.on {
+  background: #42A5F5;
+  border: 1px solid #ECEFF1;
+  color: #ECEFF1;
+}
+
+.button:hover {
+  background-image: linear-gradient(rgba(0,0,0,0) ,rgba(0,0,0,0.1))
+}

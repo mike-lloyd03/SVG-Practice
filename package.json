@@ -1,0 +1,10 @@
+{
+  "name": "svgpractice",
+  "version": "1.0.0",
+  "description": "For practicing SVG manipulation",
+  "main": "index.html",
+  "dependencies": {
+    "jquery": "^3.4.1",
+    "snapsvg": "^0.5.1"
+  }
+}
