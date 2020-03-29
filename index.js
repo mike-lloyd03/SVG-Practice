@@ -1,3 +1,5 @@
+console.log('index.js loaded')
+
 const w = 800;
 const h = 400;
 
