@@ -1,8 +1,4 @@
 const newLine = (event, svg) => {
-  if (event.target.value) {
-    svg.unclick()
-  } else {
-    svg.click(event => {
       if (!$('.newLine:last-of-type')[0]) {
         svg.line(event.offsetX, event.offsetY, event.offsetX, event.offsetY)
           .attr({
@@ -17,8 +13,6 @@ const newLine = (event, svg) => {
         })
         $('.newLine:last-of-type').removeClass('newLine')
       }
-    })
-  }
 }
 
 export default newLine
