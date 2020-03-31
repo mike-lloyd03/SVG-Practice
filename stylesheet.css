@@ -15,13 +15,20 @@ svg:hover {
 }
 
 
-.element:last-of-type {
+/* .element:last-of-type {
   stroke: #42A5F5;
+  stroke-width: 1px;
+} */
+
+.element:hover {
+  cursor: pointer;
+  stroke: #f59942;
+  fill: #f59942;
   stroke-width: 1px;
 }
 
-.element:hover {
-    cursor: pointer;
+.line {
+  stroke-width: 1px;
 }
 
 .button {
