@@ -14,7 +14,7 @@ let activeTool;
 const vertTool = 'vertTool'
 const lineTool = 'lineTool'
 const cRectTool = 'cRectTool'
-
+export let shiftKey = false
 
 // Shape Tool logic
 $('.shapeTool').click(event => {
@@ -57,9 +57,22 @@ s.click(event => {
 $('body').keydown(event => {
   console.log(event.keyCode)
   switch (event.keyCode) {
-    case 27:
+    case 16: //
+      shiftKey = true
+      break
+    case 27: //esc
       if ($('.newLine').length) {killLine(s)}
       else if ($('.newRect').length) {killRect(s)}
+      break
+    default:
+      break
+  }
+})
+
+$('body').keyup(event => {
+  switch (event.keyCode) {
+    case 16: //shift
+      shiftKey = false
       break
     default:
       break

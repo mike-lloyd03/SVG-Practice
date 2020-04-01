@@ -1,15 +1,11 @@
 import {newVertex} from './vertex.js'
+import {shiftKey} from '../index.js'
 
 
 export const newLine = (parentEvent, svg) => {
 
   // Check if there is an element with the .newLine class.
-  // The 0 key is because the jQuery selector returns an 
-  // object with a key called 0 which contains the line
-  // object. It is needed because the query returns true
-  // always if it's not included.
-  if (!$('.newLine:last-of-type')[0]) {
-    // svg.circle(parentEvent.offsetX, parentEvent.offsetY, 2).addClass('element vertex')
+  if (!$('.newLine').length) {
     newVertex(parentEvent.offsetX, parentEvent.offsetY, svg)
     svg.select('.vertex:last-of-type').addClass('newVert')
     svg.line(parentEvent.offsetX, parentEvent.offsetY, parentEvent.offsetX, parentEvent.offsetY)
@@ -20,24 +16,33 @@ export const newLine = (parentEvent, svg) => {
     // the line endpoint. This also needs to be killed if 
     // the tool changes.
     svg.mousemove(event => {
-      svg.select('.newLine:last-of-type').attr({
-        x2: event.offsetX,
-        y2: event.offsetY
-      })
+      const mouseCoords = [
+        {x2: event.offsetX, y2: event.offsetY},
+        {x2: parentEvent.offsetX, y2: event.offsetY},
+        {x2: event.offsetX, y2: parentEvent.offsetY}
+      ]
+
+      svg.select('.newLine').attr(
+        !shiftKey ? mouseCoords[0] :
+        Math.abs(event.offsetX - parentEvent.offsetX) >= Math.abs(event.offsetY - parentEvent.offsetY) ?
+        mouseCoords[2] : mouseCoords [1]
+      )
     })
   } else {
 
     // And then kill the event listener here
     svg.unmousemove()
 
+    // Add the endpoint vertex
+    newVertex(svg.select('.newLine').attr('x2'), svg.select('.newLine').attr('y2'), svg)
+
     // Finish out the line
-    svg.select('.newLine:last-of-type')
+    svg.select('.newLine')
     .addClass('element')
     .removeClass('newLine') // Remove .newLine because we are done
+    svg.select('.newVert').removeClass('newVert')
 
-    // Add the endpoint vertex
-    // svg.circle(parentEvent.offsetX, parentEvent.offsetY, 2).addClass('element vertex')
-    newVertex(parentEvent.offsetX, parentEvent.offsetY, svg)
+    
   }
 }
 
