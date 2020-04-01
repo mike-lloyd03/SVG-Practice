@@ -34,7 +34,7 @@ export const newLine = (parentEvent, svg) => {
       svg.select('.newLine').attr(
         !shiftKey ? mouseCoords[0] :
         Math.abs(x2 - x1) >= Math.abs(y2 - y1) ?
-        mouseCoords[2] : mouseCoords[1]
+        mouseCoords[2] : mouseCoords [1]
       )
     })
   } else {
