@@ -3,12 +3,19 @@ import {shiftKey} from '../index.js'
 
 
 export const newLine = (parentEvent, svg) => {
+  // need to add a way to get the coords of a vertex if
+  // the user starts drawing a line on that vertex so it
+  // snaps the line start to that vertex
+  const x1 = parentEvent.offsetX
+  const y1 = parentEvent.offsetY
+  let x2
+  let y2
 
   // Check if there is an element with the .newLine class.
   if (!$('.newLine').length) {
-    newVertex(parentEvent.offsetX, parentEvent.offsetY, svg)
+    newVertex(x1, y1, svg)
     svg.select('.vertex:last-of-type').addClass('newVert')
-    svg.line(parentEvent.offsetX, parentEvent.offsetY, parentEvent.offsetX, parentEvent.offsetY)
+    svg.line(x1, y1, x1, y1)
       .attr({stroke: 'black'})
       .addClass('newLine line') // Add .newLine to track the line endpoint
 
@@ -16,16 +23,18 @@ export const newLine = (parentEvent, svg) => {
     // the line endpoint. This also needs to be killed if 
     // the tool changes.
     svg.mousemove(event => {
+      x2 = event.offsetX
+      y2 = event.offsetY
       const mouseCoords = [
-        {x2: event.offsetX, y2: event.offsetY},
-        {x2: parentEvent.offsetX, y2: event.offsetY},
-        {x2: event.offsetX, y2: parentEvent.offsetY}
+        {x2: x2, y2: y2},
+        {x2: x1, y2: y2},
+        {x2: x2, y2: y1}
       ]
 
       svg.select('.newLine').attr(
         !shiftKey ? mouseCoords[0] :
-        Math.abs(event.offsetX - parentEvent.offsetX) >= Math.abs(event.offsetY - parentEvent.offsetY) ?
-        mouseCoords[2] : mouseCoords [1]
+        Math.abs(x2 - x1) >= Math.abs(y2 - y1) ?
+        mouseCoords[2] : mouseCoords[1]
       )
     })
   } else {
