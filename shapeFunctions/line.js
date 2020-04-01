@@ -1,3 +1,6 @@
+import {newVertex} from './vertex.js'
+
+
 export const newLine = (parentEvent, svg) => {
 
   // Check if there is an element with the .newLine class.
@@ -6,7 +9,9 @@ export const newLine = (parentEvent, svg) => {
   // object. It is needed because the query returns true
   // always if it's not included.
   if (!$('.newLine:last-of-type')[0]) {
-    svg.circle(parentEvent.offsetX, parentEvent.offsetY, 2).addClass('element vertex')
+    // svg.circle(parentEvent.offsetX, parentEvent.offsetY, 2).addClass('element vertex')
+    newVertex(parentEvent.offsetX, parentEvent.offsetY, svg)
+    svg.select('.vertex:last-of-type').addClass('newVert')
     svg.line(parentEvent.offsetX, parentEvent.offsetY, parentEvent.offsetX, parentEvent.offsetY)
       .attr({stroke: 'black'})
       .addClass('newLine line') // Add .newLine to track the line endpoint
@@ -31,7 +36,8 @@ export const newLine = (parentEvent, svg) => {
     .removeClass('newLine') // Remove .newLine because we are done
 
     // Add the endpoint vertex
-    svg.circle(parentEvent.offsetX, parentEvent.offsetY, 2).addClass('element vertex')
+    // svg.circle(parentEvent.offsetX, parentEvent.offsetY, 2).addClass('element vertex')
+    newVertex(parentEvent.offsetX, parentEvent.offsetY, svg)
   }
 }
 
@@ -39,5 +45,6 @@ export const killLine = (svg) => {
   // Kill the line if a new line was started but not completed
   // when something was changed
   svg.unmousemove()
-  svg.select('.newLine:last-of-type').remove()
+  svg.selectAll('.newLine').remove()
+  svg.selectAll('.newVert').remove()
 }

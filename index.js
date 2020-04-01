@@ -1,8 +1,8 @@
 console.log('index.js loaded')
 
+import {newVertex} from './shapeFunctions/vertex.js'
 import {newLine, killLine} from './shapeFunctions/line.js'
-import newVertex from './shapeFunctions/vertex.js'
-import {newCRect} from './shapeFunctions/rect.js'
+import {newCRect, killRect} from './shapeFunctions/rect.js'
 
 // SVG Dimensions
 const w = 800;
@@ -18,7 +18,9 @@ const cRectTool = 'cRectTool'
 
 // Shape Tool logic
 $('.shapeTool').click(event => {
-  if (activeTool == lineTool && $('.newLine:last-of-type')[0]) {killLine(s)}
+  if (activeTool == lineTool && $('.newLine').length) {killLine(s)}
+  if (activeTool == cRectTool && $('.newRect').length) {killRect(s)}
+
   if (activeTool != '') {
     $(`#${activeTool}`).val('').removeClass('on')
   }
@@ -39,13 +41,27 @@ $('#clear').click(() => {s.selectAll('.element').remove()})
 s.click(event => {
   switch(activeTool) {
     case vertTool:
-      newVertex(event, s)
+      newVertex(event.offsetX, event.offsetY, s)
       break
     case lineTool:
       newLine(event, s)
       break
     case cRectTool:
       newCRect(event, s)
+      break
+    default:
+      break
+  }
+})
+
+$('body').keydown(event => {
+  console.log(event.keyCode)
+  switch (event.keyCode) {
+    case 27:
+      if ($('.newLine').length) {killLine(s)}
+      else if ($('.newRect').length) {killRect(s)}
+      break
+    default:
       break
   }
 })
