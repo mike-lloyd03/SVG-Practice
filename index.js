@@ -2,7 +2,7 @@ console.log('index.js loaded')
 
 import {newVertex} from './shapeFunctions/vertex.js'
 import {newLine, killLine} from './shapeFunctions/line.js'
-import {newCRect, killRect} from './shapeFunctions/rect.js'
+import {newRect, killRect} from './shapeFunctions/rect.js'
 
 // SVG Dimensions
 const w = 800;
@@ -13,13 +13,13 @@ const s = Snap(w, h);
 let activeTool;
 const vertTool = 'vertTool'
 const lineTool = 'lineTool'
-const cRectTool = 'cRectTool'
+const cornerRectTool = 'cornerRectTool'
 export let shiftKey = false
 
 // Shape Tool logic
 $('.shapeTool').click(event => {
   if (activeTool == lineTool && $('.newLine').length) {killLine(s)}
-  if (activeTool == cRectTool && $('.newRect').length) {killRect(s)}
+  if (activeTool == cornerRectTool && $('.newRect').length) {killRect(s)}
 
   if (activeTool != '') {
     $(`#${activeTool}`).val('').removeClass('on')
@@ -46,8 +46,8 @@ s.click(event => {
     case lineTool:
       newLine(event, s)
       break
-    case cRectTool:
-      newCRect(event, s)
+    case cornerRectTool:
+      newRect(event, s, 'corner')
       break
     default:
       break
