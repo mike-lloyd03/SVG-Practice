@@ -21,7 +21,6 @@ svg:hover {
 } */
 
 .element:hover {
-  cursor: pointer;
   stroke: #f59942;
   fill: #f59942;
   stroke-width: 1px;

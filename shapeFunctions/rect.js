@@ -2,35 +2,39 @@ import {newVertex} from './vertex.js'
 
 export const newCRect =(parentEvent, svg) => {
   const rectSides = ['rH1', 'rV2', 'rH2', 'rV1']
+  const eventX1 = parentEvent.offsetX
+  const eventY1 = parentEvent.offsetY
+  let eventX2
+  let eventY2
 
   // Check if there is an element with the #rH1 (rectangle
   // horizontal 1) id.
   if (!$(`#${rectSides[0]}`).length) {
-    console.log('true')
     // Create four lines for each side of the cRect and vertexes
     // at each corner
     rectSides.forEach(side => {
-      svg.line(parentEvent.offsetX, parentEvent.offsetY, parentEvent.offsetX, parentEvent.offsetY)
+      svg.line(eventX1, eventY1, eventX1, eventY1)
       .attr({stroke: 'black', id: side})
       .addClass(`line newRect`)
-      newVertex(parentEvent.offsetX, parentEvent.offsetY, svg)
-      $('.vertex:last-of-type').attr('id', `${side}v`).addClass('newRect')
+      newVertex(eventX1, eventY1, svg, {id: `${side}v`, className: 'newRect'})
     })
 
     // Create a mousemove handler to track the movement of
     // the cRect endpoint. This also needs to be killed if 
     // the tool changes.
     svg.mousemove(event => {
-      svg.select(`#${rectSides[0]}`).attr({x2: event.offsetX})
-      svg.select(`#${rectSides[0]}v`).attr({cx: event.offsetX})
-      svg.select(`#${rectSides[1]}`).attr({x1: event.offsetX, x2: event.offsetX, y2: event.offsetY})
-      svg.select(`#${rectSides[1]}v`).attr({cx: event.offsetX, cy: event.offsetY})
-      svg.select(`#${rectSides[2]}`).attr({x1: event.offsetX, y1: event.offsetY,  y2: event.offsetY})
-      svg.select(`#${rectSides[2]}v`).attr({cy: event.offsetY})
-      svg.select(`#${rectSides[3]}`).attr({y2: event.offsetY})
+      eventX2 = event.offsetX
+      eventY2 = event.offsetY
+
+      svg.select(`#${rectSides[0]}`).attr({x2: eventX2})
+      svg.select(`#${rectSides[0]}v`).attr({cx: eventX2})
+      svg.select(`#${rectSides[1]}`).attr({x1: eventX2, x2: eventX2, y2: eventY2})
+      svg.select(`#${rectSides[1]}v`).attr({cx: eventX2, cy: eventY2})
+      svg.select(`#${rectSides[2]}`).attr({x1: eventX2, y1: eventY2,  y2: eventY2})
+      svg.select(`#${rectSides[2]}v`).attr({cy: eventY2})
+      svg.select(`#${rectSides[3]}`).attr({y2: eventY2})
     })
   } else {
-    console.log('false')
     // And then kill the event listener here
     svg.unmousemove()
 
