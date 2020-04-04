@@ -14,6 +14,7 @@ let activeTool;
 const vertTool = 'vertTool'
 const lineTool = 'lineTool'
 const cornerRectTool = 'cornerRectTool'
+const centerRectTool = 'centerRectTool'
 export let shiftKey = false
 
 // Shape Tool logic
@@ -48,6 +49,9 @@ s.click(event => {
       break
     case cornerRectTool:
       newRect(event, s, 'corner')
+      break
+    case centerRectTool:
+      newRect(event, s, 'center')
       break
     default:
       break
