@@ -14,15 +14,15 @@ svg:hover {
   cursor: crosshair;
 }
 
-
-/* .element:last-of-type {
-  stroke: #42A5F5;
-  stroke-width: 1px;
-} */
-
 .element:hover {
   stroke: #f59942;
   fill: #f59942;
+  stroke-width: 1px;
+}
+
+.selected {
+  stroke: #42bcf5;
+  fill: #42bcf5;
   stroke-width: 1px;
 }
 

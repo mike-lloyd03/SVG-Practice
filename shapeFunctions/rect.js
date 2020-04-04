@@ -10,7 +10,6 @@ export const newRect =(parentEvent, svg, mode) => {
   // Check if there is an element with the #rH1 (rectangle
   // horizontal 1) id.
   if (!$(`#${rectSides[0]}v`).length) {
-    console.log(`Beginning ${mode} rect`)
     // Create four lines for each side of the cRect and vertexes
     // at each corner
     rectSides.forEach(side => {
