@@ -4,6 +4,7 @@ import {newVertex} from './shapeFunctions/vertex.js'
 import {newLine, killLine} from './shapeFunctions/line.js'
 import {newRect, killRect} from './shapeFunctions/rect.js'
 import {selectElement} from './interfaceFunctions/selection.js'
+import {removeElement} from './interfaceFunctions/removeElement.js'
 
 // SVG Dimensions
 const w = 800;
@@ -12,9 +13,7 @@ const s = Snap(w, h);
 
 // Tool definitions
 let activeTool
-let selectedElementId
-export let vertices= []
-export let lines= []
+export let elements = {vertex: [], line: [], arc: []}
 const vertTool = 'vertTool'
 const lineTool = 'lineTool'
 const cornerRectTool = 'cornerRectTool'
@@ -71,7 +70,7 @@ $('body').keydown(event => {
   switch (event.keyCode) {
     case 8:
     case 46:
-      $(`.selected`).remove()
+      $('.selected').each((i, e) => removeElement(e.id))
     case 16: //
       shiftKey = true
       break

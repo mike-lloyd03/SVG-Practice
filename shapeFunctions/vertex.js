@@ -1,9 +1,12 @@
-import {vertices} from '../index.js'
+import {elements} from '../index.js'
 
 export const newVertex = (x, y, svg, args = {}) => {
     const className = 'vertex element ' + args.className || ''
-    const vertexId = vertices.length ? `vertex${parseInt(vertices[vertices.length - 1].substr(6))+1}`: 'vertex0'
-    vertices.push(vertexId)
-    console.log(vertices)
+    
+    // Add the vertex id to the elements object
+    const vertexId = elements.vertex.length ? `vertex${parseInt(elements.vertex[elements.vertex.length - 1].substr(6))+1}`: 'vertex0'
+    elements.vertex.push(vertexId)
+
+    // Create the svg element
     svg.circle(x, y, 2).addClass(className).attr({id: vertexId})
 }
